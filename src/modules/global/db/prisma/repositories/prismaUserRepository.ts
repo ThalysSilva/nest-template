@@ -4,7 +4,8 @@ import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
 import { OmitDefaultData } from 'src/utils/types';
 import _ from 'lodash';
-
+import { Injectable } from '@nestjs/common';
+@Injectable()
 export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaService) {}
 
