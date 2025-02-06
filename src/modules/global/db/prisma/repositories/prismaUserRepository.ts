@@ -34,7 +34,7 @@ export class PrismaUserRepository implements UserRepository {
       },
     });
 
-    return _.omit(user, 'password');
+    return user ? _.omit(user, 'password') : null;
   }
 
   async findByIdWithPassword(id: string): Promise<UserWithPassword | null> {
@@ -53,7 +53,7 @@ export class PrismaUserRepository implements UserRepository {
         email,
       },
     });
-    return _.omit(user, 'password');
+    return user ? _.omit(user, 'password') : null;
   }
 
   async update(

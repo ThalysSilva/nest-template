@@ -4,13 +4,12 @@ import { MongoService } from './mongo.service';
 import { mongoAdapters } from './mongoAdapters';
 import { mongoRepositories } from './mongoRepositorios';
 
-@Global()
 @Module({
   providers: [
     {
       provide: 'MONGO_CONNECTION',
       useFactory: async (): Promise<{ client: MongoClient; db: Db }> => {
-        const DATABASE_URL = process.env.MONGO_BANCO_DADOS_URL ?? '';
+        const DATABASE_URL = process.env.MONGO_DATABASE_URL ?? '';
         const DATABASE_NAME = process.env.DATABASE_NAME ?? '';
         const logger = new Logger('MongoService');
         const client = new MongoClient(DATABASE_URL);

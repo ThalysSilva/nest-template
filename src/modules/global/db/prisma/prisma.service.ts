@@ -15,8 +15,8 @@ export class PrismaService
 
   async onModuleInit() {
     await this.$connect();
-    const BANCO_DADOS_URL = process.env.SQLITE_BANCO_DADOS_URL;
-    this.logger.log(`Conectado ao Prisma!! (${BANCO_DADOS_URL})`);
+    const POSTGRES_DATABASE_URL = process.env.POSTGRES_DATABASE_URL;
+    this.logger.log(`Conectado ao Prisma!! (${POSTGRES_DATABASE_URL})`);
   }
 
   async onModuleDestroy() {

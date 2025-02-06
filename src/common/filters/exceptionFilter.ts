@@ -21,25 +21,25 @@ export class ExceptionFilterTreatment implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     if (exception instanceof ApplicationError) {
-      const { message, statusCode: codigoStatus, details: detalhes, action: acao, saveLog: salvarEmLog, stack } =
+      const { message, statusCode, details, action, saveLog, stack } =
         exception;
 
       const payload = {
-        mensagem: message,
-        acao,
-        detalhes: {
-          ...detalhes,
-          codigoStatus,
+        message,
+        action,
+        details: {
+          ...details,
+          statusCode,
           stack,
         },
       };
 
-      if (salvarEmLog) {
+      if (saveLog) {
         await this.logService.error(payload);
       }
 
-      return response.status(codigoStatus).json({
-        erro: { mensagem: message, acao },
+      return response.status(statusCode).json({
+        erro: { mensagem: message, acao: action },
       });
     }
 

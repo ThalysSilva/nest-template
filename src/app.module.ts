@@ -7,11 +7,13 @@ import { ExceptionFilterTreatment } from './common/filters/exceptionFilter';
 import { LogModule } from './modules/global/logs/log.module';
 import { HttpModule } from '@nestjs/axios';
 import { PrismaModule } from './modules/global/db/prisma/prisma.module';
+import { AuthenticationModule } from './modules/global/authentication/authentication.module';
 
 @Module({
   imports: [
     LogModule,
     PrismaModule,
+    AuthenticationModule,
     ConfigModule.forRoot(),
     HttpModule.register({
       global: true,
