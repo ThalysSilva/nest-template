@@ -4,6 +4,7 @@ import { MongoService } from './mongo.service';
 import { mongoAdapters } from './mongoAdapters';
 import { mongoRepositories } from './mongoRepositorios';
 
+@Global()
 @Module({
   providers: [
     {
