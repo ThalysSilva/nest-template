@@ -39,7 +39,7 @@ export class ExceptionFilterTreatment implements ExceptionFilter {
       }
 
       return response.status(statusCode).json({
-        erro: { mensagem: message, acao: action },
+        error: { message, action },
       });
     }
 
@@ -58,12 +58,11 @@ export class ExceptionFilterTreatment implements ExceptionFilter {
           message: responseBody.message,
           action: 'desconhecida',
           details: {
-            codigoStatus: status,
-            detalhes: exception,
+            statusCode: status,
+            exception,
             stack: exception.stack,
-            nomeExcecao: exception.name,
-            causa: exception.cause,
-            objetoErro: responseBody.message,
+            exceptionName: exception.name,
+            cause: exception.cause,
           },
         });
       }
@@ -73,25 +72,25 @@ export class ExceptionFilterTreatment implements ExceptionFilter {
       });
     }
 
-    const status = HttpStatus.INTERNAL_SERVER_ERROR;
+    const statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
     if (exception instanceof Error) {
-      const mensagem = exception.message ?? 'Erro desconhecido';
-      const acao = exception.stack ?? 'desconhecida';
+      const message = exception.message ?? 'Erro desconhecido';
+      const action = exception.stack ?? 'desconhecida';
 
       await this.logService.error({
-        message: mensagem,
-        action: acao,
+        message,
+        action,
         details: {
-          codigoStatus: status,
-          excecao: exception,
-          nomeExcecao: exception.name,
+          statusCode,
+          exception,
+          exceptionName: exception.name,
         },
       });
 
-      return response.status(status).json({
-        erro: {
-          mensagem: `Erro interno do servidor: ${mensagem}`,
+      return response.status(statusCode).json({
+        error: {
+          message: `Erro interno do servidor: ${message}`,
         },
       });
     }
@@ -100,14 +99,14 @@ export class ExceptionFilterTreatment implements ExceptionFilter {
       message: 'erro desconhecido',
       action: 'desconhecida',
       details: {
-        codigoStatus: status,
-        excecao: exception,
+        statusCode,
+        exception,
       },
     });
 
-    return response.status(status).json({
-      erro: {
-        mensagem: `Erro interno do servidor`,
+    return response.status(statusCode).json({
+      error: {
+        message: `Erro interno do servidor`,
       },
     });
   }

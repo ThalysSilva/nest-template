@@ -3,8 +3,8 @@ export type Log = {
   message: string;
   details: any;
   action: string;
-  type: LogTipo;
+  type: LogType;
   createdAt: Date;
 };
 
-export type LogTipo = 'INFO' | 'ERROR' | 'WARN';
+export type LogType = 'INFO' | 'ERROR' | 'WARN';
