@@ -9,12 +9,14 @@ import { HttpModule } from '@nestjs/axios';
 import { PrismaModule } from './modules/global/db/prisma/prisma.module';
 import { AuthenticationModule } from './modules/global/authentication/authentication.module';
 import { MongoModule } from './modules/global/db/mongodb/mongo.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
     LogModule,
     MongoModule,
     PrismaModule,
+    UserModule,
     AuthenticationModule,
     ConfigModule.forRoot(),
     HttpModule.register({

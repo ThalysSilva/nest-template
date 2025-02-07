@@ -12,6 +12,7 @@ import { User } from 'src/@types/entities/user';
 import { JwtPayload } from 'src/@types/entities/jwt';
 import refreshJwtConfig from 'src/modules/global/authentication/config/refresh-jwt.config';
 import { ConfigType } from '@nestjs/config';
+import { omit } from 'lodash';
 
 @Injectable()
 export class AuthenticationService {
@@ -58,7 +59,7 @@ export class AuthenticationService {
     const { token, refreshToken } = await this.generateTokens(payload);
 
     return {
-      data: user,
+      data: omit(user, ['refreshToken', 'createdAt', 'updatedAt']),
       refreshToken,
       token,
     };

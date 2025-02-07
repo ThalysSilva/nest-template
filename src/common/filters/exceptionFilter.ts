@@ -68,7 +68,7 @@ export class ExceptionFilterTreatment implements ExceptionFilter {
       }
 
       return response.status(status).json({
-        erro: { mensagem: responseBody.message },
+        error: { message: responseBody.message },
       });
     }
 

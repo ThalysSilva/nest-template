@@ -3,7 +3,7 @@ import { UserRepository } from 'src/repository/userRepository';
 import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
 import { OmitDefaultData } from 'src/utils/types';
-import _ from 'lodash';
+import { omit } from 'lodash';
 import { Injectable } from '@nestjs/common';
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
@@ -25,7 +25,8 @@ export class PrismaUserRepository implements UserRepository {
         ...user,
       },
     });
-    return _.omit(newUser, 'password');
+
+    return omit(newUser, ['password']);
   }
 
   async findById(id: string): Promise<User | null> {
@@ -35,7 +36,7 @@ export class PrismaUserRepository implements UserRepository {
       },
     });
 
-    return user ? _.omit(user, 'password') : null;
+    return user ? omit(user, 'password') : null;
   }
 
   async findByIdWithPassword(id: string): Promise<UserWithPassword | null> {
@@ -54,7 +55,7 @@ export class PrismaUserRepository implements UserRepository {
         email,
       },
     });
-    return user ? _.omit(user, 'password') : null;
+    return user ? omit(user, 'password') : null;
   }
 
   async update(
@@ -67,6 +68,6 @@ export class PrismaUserRepository implements UserRepository {
       },
       data,
     });
-    return _.omit(user, 'password');
+    return omit(user, 'password');
   }
 }
