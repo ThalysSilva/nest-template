@@ -56,12 +56,11 @@ export class AuthenticationService {
       userId: user.id,
     };
 
-    const { token, refreshToken } = await this.generateTokens(payload);
+    const tokens = await this.generateTokens(payload);
 
     return {
       data: omit(user, ['refreshToken', 'createdAt', 'updatedAt']),
-      refreshToken,
-      token,
+      ...tokens,
     };
   }
 
@@ -90,7 +89,10 @@ export class AuthenticationService {
 
     const tokens = await this.generateTokens(payload);
 
-    return { data: user, ...tokens };
+    return {
+      data: omit(user, ['refreshToken', 'createdAt', 'updatedAt']),
+      ...tokens,
+    };
   }
 
   private async generateTokens({ exp, iat, ...payload }: JwtPayload) {

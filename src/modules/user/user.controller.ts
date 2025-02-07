@@ -7,7 +7,7 @@ import {
   CreateUserSchemaData,
 } from './schemas/createUser';
 import { ValidateRequest } from 'src/utils/zod/decorators';
-import { ApiResponse, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiBody, ApiTags, ApiOperation } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 
 @ApiTags('Usuários')
@@ -17,6 +17,7 @@ export class UserController {
 
   @Post()
   @ValidateRequest(createUserSchema)
+  @ApiOperation({ summary: 'Criar usuário' })
   @ApiBody({
     description: 'Dados para criação do usuário',
     type: CreateUserDto,
