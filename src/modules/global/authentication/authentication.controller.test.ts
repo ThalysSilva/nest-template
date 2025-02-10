@@ -104,7 +104,7 @@ describe('AuthenticationController', () => {
         new Error('Invalid credentials'),
       );
 
-      await expect(controller.login(req, loginDto)).rejects.toThrowError(
+      await expect(controller.login(req, loginDto)).rejects.toThrow(
         'Invalid credentials',
       );
     });
