@@ -3,43 +3,49 @@ import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '@/repository/userRepository';
 import { AuthenticationService } from './authentication.service';
 import { NotAuthorizedError } from '@/common/applicationError';
-import refreshJwtConfig from '@/modules/global/authentication/config/refresh-jwt.config';
 import { User } from '@/@entities/user';
 import { JwtPayload } from '@/@types/jwt';
+import { mock } from 'jest-mock-extended';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import refreshJwtConfig from './config/refresh-jwt.config';
+
+const jwtServiceMock = mock<JwtService>();
+const userRepositoryMock = mock<UserRepository>();
+const configServiceMock = mock<ConfigService>();
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
-  let jwtService: JwtService;
-  let userRepository: UserRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthenticationService,
+        { provide: JwtService, useValue: jwtServiceMock },
+        { provide: UserRepository, useValue: userRepositoryMock },
         {
-          provide: JwtService,
-          useValue: {
-            sign: jest.fn(),
-            verify: jest.fn(),
-          },
+          provide: ConfigService,
+          useValue: configServiceMock,
         },
-        {
-          provide: UserRepository,
-          useValue: {
-            findById: jest.fn(),
-            update: jest.fn(),
-          },
-        },
-        {
-          provide: refreshJwtConfig.KEY,
-          useValue: {},
-        },
+      ],
+      imports: [
+        ConfigModule.forRoot({
+          load: [refreshJwtConfig],
+        }),
       ],
     }).compile();
 
     service = module.get<AuthenticationService>(AuthenticationService);
-    jwtService = module.get<JwtService>(JwtService);
-    userRepository = module.get<UserRepository>(UserRepository);
+    configServiceMock.get.mockImplementation((key: string) => {
+      if (key === 'jwtConfig') {
+        return {
+          secret: 'secret',
+          signOptions: {
+            expiresIn: '1h',
+          },
+        };
+      }
+      // Outras configurações
+    });
   });
 
   describe('refreshToken', () => {
@@ -60,13 +66,11 @@ describe('AuthenticationService', () => {
         updatedAt: new Date(),
       };
 
-      jest.spyOn(jwtService, 'verify').mockReturnValue(payload);
-      jest.spyOn(userRepository, 'findById').mockResolvedValue(user);
-      jest
-        .spyOn(jwtService, 'sign')
-        .mockReturnValueOnce('newToken')
-        .mockReturnValueOnce('newRefreshToken');
-      jest.spyOn(userRepository, 'update').mockResolvedValue(null);
+      jwtServiceMock.verify.mockReturnValue(payload);
+      userRepositoryMock.findById.mockResolvedValue(user);
+      jwtServiceMock.sign.mockReturnValueOnce('newToken');
+      jwtServiceMock.sign.mockReturnValueOnce('newRefreshToken');
+      userRepositoryMock.update.mockResolvedValue(null);
 
       const result = await service.refreshToken(refreshToken);
 
@@ -81,8 +85,8 @@ describe('AuthenticationService', () => {
       const refreshToken = 'validRefreshToken';
       const payload = { userId: '123' };
 
-      jest.spyOn(jwtService, 'verify').mockReturnValue(payload);
-      jest.spyOn(userRepository, 'findById').mockResolvedValue(null);
+      jwtServiceMock.verify.mockReturnValue(payload);
+      userRepositoryMock.findById.mockResolvedValue(null);
 
       await expect(service.refreshToken(refreshToken)).rejects.toThrow(
         NotAuthorizedError,
@@ -101,8 +105,8 @@ describe('AuthenticationService', () => {
         updatedAt: new Date(),
       };
 
-      jest.spyOn(jwtService, 'verify').mockReturnValue(payload);
-      jest.spyOn(userRepository, 'findById').mockResolvedValue(user);
+      jwtServiceMock.verify.mockReturnValue(payload);
+      userRepositoryMock.findById.mockResolvedValue(user);
 
       await expect(service.refreshToken(refreshToken)).rejects.toThrow(
         NotAuthorizedError,
@@ -112,7 +116,7 @@ describe('AuthenticationService', () => {
     it('should throw NotAuthorizedError if refresh token is invalid', async () => {
       const refreshToken = 'invalidRefreshToken';
 
-      jest.spyOn(jwtService, 'verify').mockImplementation(() => {
+      jwtServiceMock.verify.mockImplementation(() => {
         throw new NotAuthorizedError({
           action: 'authenticationService.verifyRefreshToken',
           message: 'Token expirado ou inválido',
