@@ -45,17 +45,17 @@ export class ExceptionFilterTreatment implements ExceptionFilter {
 
     if (exception instanceof HttpException) {
       const status = exception.getStatus();
-      const responseBody = exception.getResponse() as {
-        message: string;
-        statusCode: number;
-        error: string;
-      };
+      const responseBody = exception.getResponse() as
+        | string
+        | { message: string };
+      const message =
+        typeof responseBody === 'string' ? responseBody : responseBody.message;
       const isBadRequest = exception instanceof BadRequestException;
       const isUnauthorized = exception instanceof UnauthorizedException;
 
       if (!isBadRequest && !isUnauthorized) {
         await this.logService.error({
-          message: responseBody.message,
+          message,
           action: 'desconhecida',
           details: {
             statusCode: status,
@@ -68,7 +68,7 @@ export class ExceptionFilterTreatment implements ExceptionFilter {
       }
 
       return response.status(status).json({
-        error: { message: responseBody.message },
+        error: { message: message },
       });
     }
 
