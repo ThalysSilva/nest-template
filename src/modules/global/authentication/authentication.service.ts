@@ -1,5 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { Injectable } from '@nestjs/common';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { UserRepository } from '@/repository/userRepository';
@@ -10,18 +10,23 @@ import {
 } from '@/common/applicationError';
 import { User } from '@/@entities/user';
 import { JwtPayload } from '@/@types/jwt';
-import refreshJwtConfig from '@/modules/global/authentication/config/refresh-jwt.config';
-import { ConfigType } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { omit } from 'lodash';
 
 @Injectable()
 export class AuthenticationService {
+  private refreshTokenConfig: JwtSignOptions;
+
   constructor(
     private jwtService: JwtService,
     private userRepository: UserRepository,
-    @Inject(refreshJwtConfig.KEY)
-    private refreshTokenConfig: ConfigType<typeof refreshJwtConfig>,
-  ) {}
+    private configService: ConfigService,
+  ) {
+    this.refreshTokenConfig = this.configService.get('refresh-jwt') ?? {
+      secret: '',
+      expiresIn: '',
+    };
+  }
 
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.userRepository.findByEmail(email);

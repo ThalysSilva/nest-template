@@ -13,11 +13,12 @@ import { doNothing } from '@/utils/functions/general';
 import { JwtAuthGuard } from '@/modules/global/authentication/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '@/modules/global/authentication/guards/local-auth.guard';
 import { RefreshJwtAuthGuard } from './guards/refresh-auth.guard';
-import { CustomRequest } from '@/@types/services/types';
 import { LoginResponseDto } from './dto/login.dto';
 import { ValidateRequest } from '@/utils/zod/decorators';
 import { LoginDto, loginSchema, LoginSchemaData } from './schemas/login';
 import { RefreshTokenDto } from './schemas/refresh';
+import { BadRequestError } from '@/common/applicationError';
+import { CustomRequest } from '@/@types/services/types';
 
 @ApiTags('Autenticação')
 @Controller('api/auth')
@@ -48,6 +49,13 @@ export class AuthenticationController {
   @ApiOperation({ summary: 'Deslogar usuário' })
   @Post('logout')
   async logout(@Request() req: CustomRequest) {
+    if (!req.user) {
+      throw new BadRequestError({
+        message: 'Usuário não autenticado',
+        action: 'AuthenticationController.logout',
+        saveLog: false,
+      });
+    }
     return this.authenticationService.logout(req.user.id);
   }
 
@@ -64,7 +72,7 @@ export class AuthenticationController {
     type: LoginResponseDto,
   })
   @Post('refreshToken')
-  async renovarToken(@Body('refreshToken') refreshToken: string) {
+  async refreshToken(@Body('refreshToken') refreshToken: string) {
     return this.authenticationService.refreshToken(refreshToken);
   }
 }

@@ -9,14 +9,18 @@ import refreshJwtConfig from './config/refresh-jwt.config';
 import { ConfigModule } from '@nestjs/config';
 import { AuthenticationService } from './authentication.service';
 import { RefreshJwtStrategy } from './strategies/refresh-jwt.strategy';
+import { UserModule } from '@/modules/user/user.module';
 
 @Module({
   controllers: [AuthenticationController],
   imports: [
     PassportModule,
+    UserModule,
     JwtModule.registerAsync(jwtConfig.asProvider()),
-    ConfigModule.forFeature(jwtConfig),
-    ConfigModule.forFeature(refreshJwtConfig),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [refreshJwtConfig],
+    }),
   ],
   providers: [
     AuthenticationService,

@@ -1,6 +1,10 @@
-import { Request } from '@nestjs/common';
-import { User } from '../../@entities/user';
-
-export type CustomRequest = typeof Request & {
-  user: User;
-};
+export interface CustomRequest extends Request {
+  user?: {
+    id: string;
+    email: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    refreshToken: string;
+  };
+}
