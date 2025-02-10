@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserWithPassword } from 'src/@types/entities/user';
+import { UserWithPassword } from 'src/@entities/user';
 import { BadRequestError } from 'src/common/applicationError';
 import { UserRepository } from 'src/repository/userRepository';
 import { OmitDefaultData } from 'src/utils/types';

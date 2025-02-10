@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OptionalNullable } from 'src/utils/types';
 import * as moment from 'moment-timezone';
-import { Log, LogType } from 'src/@types/entities/log';
+import { Log, LogType } from 'src/@entities/log';
 import { LogsRepository } from 'src/repository/logsRepository';
 import { normalizeKeys, removeLoops } from 'src/utils/functions/objects';
 

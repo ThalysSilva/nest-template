@@ -1,7 +1,7 @@
 import { ClientSession, Collection, Db, ObjectId } from 'mongodb';
 import { Injectable } from '@nestjs/common';
 import { LogsRepository } from '../../../../../repository/logsRepository';
-import { Log } from 'src/@types/entities/log';
+import { Log } from 'src/@entities/log';
 import { LogsModel } from 'src/modules/global/db/mongodb/models';
 import { MongoService } from 'src/modules/global/db/mongodb/mongo.service';
 

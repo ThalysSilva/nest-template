@@ -1,4 +1,4 @@
-import { User, UserWithPassword } from 'src/@types/entities/user';
+import { User, UserWithPassword } from 'src/@entities/user';
 import { UserRepository } from 'src/repository/userRepository';
 import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
