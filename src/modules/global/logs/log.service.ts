@@ -1,11 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { OptionalNullable } from 'src/utils/types';
+import { OptionalNullable } from '@/utils/types';
 import * as moment from 'moment-timezone';
-import { Log, LogType } from 'src/@entities/log';
-import { LogsRepository } from 'src/repository/logsRepository';
-import { normalizeKeys, removeLoops } from 'src/utils/functions/objects';
+import { Log, LogType } from '@/@entities/log';
+import { LogsRepository } from '@/repository/logsRepository';
+import { normalizeKeys, removeLoops } from '@/utils/functions/objects';
 
-type LogProps = Omit<OptionalNullable<Log>, 'id' | 'createdAt' | 'details'> &
+export type LogProps = Omit<
+  OptionalNullable<Log>,
+  'id' | 'createdAt' | 'details'
+> &
   Partial<{
     details: Record<string, unknown>;
     detailsFormat?: 'json' | 'string';
@@ -14,8 +17,10 @@ type LogProps = Omit<OptionalNullable<Log>, 'id' | 'createdAt' | 'details'> &
 
 @Injectable()
 export class LogService {
-  private readonly logger = new Logger('LogService');
-  constructor(private readonly logsRepository: LogsRepository) {}
+  constructor(
+    private readonly logsRepository: LogsRepository,
+    private readonly logger: Logger,
+  ) {}
 
   async log({
     displayOnConsole = false,
@@ -28,7 +33,6 @@ export class LogService {
       ERROR: this.logger.error.bind(this.logger),
       WARN: this.logger.warn.bind(this.logger),
     } as Record<LogType, (message: string) => void>;
-
     const selectedLogFunctionSystem = selectionLogSystemObject[type];
 
     const normalizedDetails = normalizeKeys(removeLoops(log.details));
@@ -37,8 +41,9 @@ export class LogService {
     const details = keepFormat
       ? normalizedDetails
       : JSON.stringify(normalizedDetails);
-    const payload = {
+    const payload: Omit<Log, 'id'> = {
       ...log,
+      type,
       createdAt,
       details,
     };
