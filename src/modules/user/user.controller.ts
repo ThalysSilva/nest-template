@@ -8,7 +8,6 @@ import {
 } from './schemas/createUser';
 import { ValidateRequest } from '@/utils/zod/decorators';
 import { ApiResponse, ApiBody, ApiTags, ApiOperation } from '@nestjs/swagger';
-import * as bcrypt from 'bcrypt';
 
 @ApiTags('Usuários')
 @Controller('api/user')
@@ -34,7 +33,6 @@ export class UserController {
   public async createUser(
     @Body() user: CreateUserSchemaData,
   ): Promise<User | null> {
-    const passwordHash = await bcrypt.hash(user.password, 10);
-    return await this.userService.create({ ...user, password: passwordHash });
+    return await this.userService.create(user);
   }
 }
