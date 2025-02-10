@@ -19,7 +19,7 @@ import { UserModule } from '@/modules/user/user.module';
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [refreshJwtConfig],
+      load: [refreshJwtConfig, jwtConfig],
     }),
   ],
   providers: [

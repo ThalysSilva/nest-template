@@ -22,10 +22,7 @@ export class AuthenticationService {
     private userRepository: UserRepository,
     private configService: ConfigService,
   ) {
-    this.refreshTokenConfig = this.configService.get('refresh-jwt') ?? {
-      secret: '',
-      expiresIn: '',
-    };
+    this.refreshTokenConfig = this.configService.get('refresh-jwt') ?? {};
   }
 
   async validateUser(email: string, password: string): Promise<User | null> {
