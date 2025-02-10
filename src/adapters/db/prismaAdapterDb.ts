@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { AdapterDb } from './adapterDb';
 import { Prisma } from '@prisma/client';
-import { Repository } from 'src/repository/repository';
+import { Repository } from '@/repository/repository';
 import {
   defineTransactionContexts,
   removeTransactionContexts,
-} from 'src/utils/functions/repositories';
-import { PrismaService } from 'src/modules/global/db/prisma/prisma.service';
+} from '@/utils/functions/repositories';
+import { PrismaService } from '@/modules/global/db/prisma/prisma.service';
 
 @Injectable()
 export class PrismaAdapterDb implements AdapterDb {

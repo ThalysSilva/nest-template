@@ -1,5 +1,5 @@
 import { Provider } from '@nestjs/common';
-import { UserRepository } from 'src/repository/userRepository';
+import { UserRepository } from '@/repository/userRepository';
 import { PrismaUserRepository } from './repositories/prismaUserRepository';
 
 export const prismaRepositories = [

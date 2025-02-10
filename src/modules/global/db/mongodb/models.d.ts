@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { LogType } from 'src/@entities/log';
+import { LogType } from '@/@entities/log';
 
 export type LogsModel = {
   _id?: ObjectId;
@@ -7,5 +7,5 @@ export type LogsModel = {
   details: string;
   action: string;
   type: LogType;
-  createdAt: Date;
+  createdAt: string;
 };

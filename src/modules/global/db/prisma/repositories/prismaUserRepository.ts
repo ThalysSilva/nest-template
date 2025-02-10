@@ -1,8 +1,8 @@
-import { User, UserWithPassword } from 'src/@entities/user';
-import { UserRepository } from 'src/repository/userRepository';
+import { User, UserWithPassword } from '@/@entities/user';
+import { UserRepository } from '@/repository/userRepository';
 import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
-import { OmitDefaultData } from 'src/utils/types';
+import { OmitDefaultData } from '@/utils/types';
 import { omit } from 'lodash';
 import { Injectable } from '@nestjs/common';
 @Injectable()

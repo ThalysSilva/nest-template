@@ -25,7 +25,7 @@ export class Log {
     example: '2021-09-20T00:00:00.000Z',
     description: 'Data de criação do log',
   })
-  createdAt: Date;
+  createdAt: string;
 }
 
 export type LogType = 'INFO' | 'ERROR' | 'WARN';

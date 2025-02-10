@@ -1,10 +1,10 @@
 import { Injectable, OnModuleDestroy, Logger, Inject } from '@nestjs/common';
 import { MongoClient, Db, ClientSession } from 'mongodb';
-import { Repository } from 'src/repository/repository';
+import { Repository } from '@/repository/repository';
 import {
   defineTransactionContexts,
   removeTransactionContexts,
-} from 'src/utils/functions/repositories';
+} from '@/utils/functions/repositories';
 
 @Injectable()
 export class MongoService implements OnModuleDestroy {

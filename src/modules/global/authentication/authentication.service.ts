@@ -2,15 +2,15 @@ import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { UserRepository } from 'src/repository/userRepository';
-import { doNothing } from 'src/utils/functions/general';
+import { UserRepository } from '@/repository/userRepository';
+import { doNothing } from '@/utils/functions/general';
 import {
   ApplicationError,
   NotAuthorizedError,
-} from 'src/common/applicationError';
-import { User } from 'src/@entities/user';
-import { JwtPayload } from 'src/@types/jwt';
-import refreshJwtConfig from 'src/modules/global/authentication/config/refresh-jwt.config';
+} from '@/common/applicationError';
+import { User } from '@/@entities/user';
+import { JwtPayload } from '@/@types/jwt';
+import refreshJwtConfig from '@/modules/global/authentication/config/refresh-jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { omit } from 'lodash';
 

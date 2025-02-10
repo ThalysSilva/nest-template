@@ -1,6 +1,6 @@
-import { OmitDefaultData } from 'src/utils/types';
+import { OmitDefaultData } from '@/utils/types';
 import { Repository } from './repository';
-import { User, UserWithPassword } from 'src/@entities/user';
+import { User, UserWithPassword } from '@/@entities/user';
 
 export abstract class UserRepository extends Repository {
   abstract findByIdWithPassword(user: any): Promise<UserWithPassword | null>;

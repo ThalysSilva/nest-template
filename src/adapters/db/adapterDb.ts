@@ -1,4 +1,4 @@
-import { Repository } from 'src/repository/repository';
+import { Repository } from '@/repository/repository';
 
 export abstract class AdapterDb {
   abstract makeTransaction<T>(

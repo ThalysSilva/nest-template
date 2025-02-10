@@ -9,13 +9,13 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from './authentication.service';
-import { doNothing } from 'src/utils/functions/general';
-import { JwtAuthGuard } from 'src/modules/global/authentication/guards/jwt-auth.guard';
-import { LocalAuthGuard } from 'src/modules/global/authentication/guards/local-auth.guard';
+import { doNothing } from '@/utils/functions/general';
+import { JwtAuthGuard } from '@/modules/global/authentication/guards/jwt-auth.guard';
+import { LocalAuthGuard } from '@/modules/global/authentication/guards/local-auth.guard';
 import { RefreshJwtAuthGuard } from './guards/refresh-auth.guard';
-import { CustomRequest } from 'src/@types/services/types';
+import { CustomRequest } from '@/@types/services/types';
 import { LoginResponseDto } from './dto/login.dto';
-import { ValidateRequest } from 'src/utils/zod/decorators';
+import { ValidateRequest } from '@/utils/zod/decorators';
 import { LoginDto, loginSchema, LoginSchemaData } from './schemas/login';
 import { RefreshTokenDto } from './schemas/refresh';
 

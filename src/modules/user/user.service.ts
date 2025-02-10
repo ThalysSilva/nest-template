@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UserWithPassword } from 'src/@entities/user';
-import { BadRequestError } from 'src/common/applicationError';
-import { UserRepository } from 'src/repository/userRepository';
-import { OmitDefaultData } from 'src/utils/types';
+import { UserWithPassword } from '@/@entities/user';
+import { BadRequestError } from '@/common/applicationError';
+import { UserRepository } from '@/repository/userRepository';
+import { OmitDefaultData } from '@/utils/types';
 
 @Injectable()
 export class UserService {

@@ -1,12 +1,12 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from 'src/@entities/user';
+import { User } from '@/@entities/user';
 import {
   CreateUserDto,
   createUserSchema,
   CreateUserSchemaData,
 } from './schemas/createUser';
-import { ValidateRequest } from 'src/utils/zod/decorators';
+import { ValidateRequest } from '@/utils/zod/decorators';
 import { ApiResponse, ApiBody, ApiTags, ApiOperation } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 

@@ -24,7 +24,7 @@ export class MongoLogsRepository implements LogsRepository {
     this.session = undefined;
   }
 
-  async createLog(log: Log): Promise<void> {
+  async createLog(log: Omit<Log, 'id'>): Promise<void> {
     await this.collection.insertOne(log, { session: this.session });
   }
 
