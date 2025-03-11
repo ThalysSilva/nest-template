@@ -1,6 +1,6 @@
 import { ClientSession, Collection, Db, ObjectId } from 'mongodb';
 import { Injectable } from '@nestjs/common';
-import { LogsRepository } from '../../../../../repository/logsRepository';
+import { LogsRepository } from '../../../../../repositories/logRepository';
 import { Log } from 'src/@entities/log';
 import { LogsModel } from 'src/modules/global/db/mongodb/models';
 import { MongoService } from 'src/modules/global/db/mongodb/mongo.service';

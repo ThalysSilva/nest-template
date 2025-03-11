@@ -3,7 +3,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { CreateUserDto } from './schemas/createUser';
 import { mock } from 'jest-mock-extended';
-import { User } from '@/@entities/user';
+import { User } from 'src/@entities/user';
 
 const userServiceMock = mock<UserService>();
 

@@ -1,6 +1,6 @@
-import { LogsRepository } from '@/repository/logsRepository';
+import { LogsRepository } from 'src/repositories/logRepository';
 
-import { MongoLogsRepository } from '@/modules/global/db/mongodb/repositories/mongoLogsRepository';
+import { MongoLogsRepository } from 'src/modules/global/db/mongodb/repositories/mongoLogsRepository';
 import { Provider } from '@nestjs/common';
 
 export const mongoRepositories = [

@@ -1,10 +1,10 @@
-import { User, UserWithPassword } from '@/@entities/user';
-import { UserRepository } from '@/repository/userRepository';
+import { User, UserWithPassword } from 'src/@entities/user';
 import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
-import { OmitDefaultData } from '@/utils/types';
+import { OmitDefaultData } from 'src/utils/types';
 import { omit } from 'lodash';
 import { Injectable } from '@nestjs/common';
+import { UserRepository } from 'src/repositories/userRepository';
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaService) {}

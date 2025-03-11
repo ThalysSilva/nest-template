@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
-import { UserRepository } from '@/repository/userRepository';
-import { User, UserWithPassword } from '@/@entities/user';
-import { BadRequestError } from '@/common/applicationError';
+import { UserRepository } from 'src/repositories/userRepository';
+import { User, UserWithPassword } from 'src/@entities/user';
+import { BadRequestError } from 'src/common/applicationError';
 import { mock } from 'jest-mock-extended';
-import { OmitDefaultData } from '@/utils/types';
+import { OmitDefaultData } from 'src/utils/types';
 
 const userRepositoryMock = mock<UserRepository>();
 

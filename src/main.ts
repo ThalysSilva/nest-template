@@ -30,21 +30,21 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
 
   const allowedUrls = process.env.ALLOWED_URLS?.split(',') ?? [];
+  logger.log('[CORS] Urls permitidas: ' + allowedUrls.join(', '));
 
   app.enableCors({
-    origin: [...allowedUrls],
-    methods: 'POST,GET',
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
   });
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-  const PORTA = process.env.PORT || 3000;
-  await app.listen(PORTA);
+  const PORT = process.env.PORT || 3003;
+  await app.listen(PORT);
 
-  logger.log(`Aplicação rodando na porta ${PORTA} !!`);
+  logger.log(`Aplicação rodando na porta ${PORT} !!`);
 }
 
 bootstrap();

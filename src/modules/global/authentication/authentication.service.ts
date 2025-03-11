@@ -2,16 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { UserRepository } from '@/repository/userRepository';
-import { doNothing } from '@/utils/functions/general';
+import { doNothing } from 'src/utils/functions/general';
 import {
   ApplicationError,
   NotAuthorizedError,
-} from '@/common/applicationError';
-import { User } from '@/@entities/user';
-import { JwtPayload } from '@/@types/jwt';
+} from 'src/common/applicationError';
+import { User } from 'src/@entities/user';
+import { JwtPayload } from 'src/@types/jwt';
 import { ConfigService } from '@nestjs/config';
 import { omit } from 'lodash';
+import { UserRepository } from 'src/repositories/userRepository';
 
 @Injectable()
 export class AuthenticationService {

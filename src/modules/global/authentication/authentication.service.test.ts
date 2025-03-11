@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from '@/repository/userRepository';
+import { UserRepository } from 'src/repositories/userRepository';
 import { AuthenticationService } from './authentication.service';
-import { NotAuthorizedError } from '@/common/applicationError';
-import { User } from '@/@entities/user';
-import { JwtPayload } from '@/@types/jwt';
+import { NotAuthorizedError } from 'src/common/applicationError';
+import { User } from 'src/@entities/user';
+import { JwtPayload } from 'src/@types/jwt';
 import { mock } from 'jest-mock-extended';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import refreshJwtConfig from './config/refresh-jwt.config';

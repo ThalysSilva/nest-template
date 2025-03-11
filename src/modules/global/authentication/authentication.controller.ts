@@ -9,16 +9,16 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from './authentication.service';
-import { doNothing } from '@/utils/functions/general';
-import { JwtAuthGuard } from '@/modules/global/authentication/guards/jwt-auth.guard';
-import { LocalAuthGuard } from '@/modules/global/authentication/guards/local-auth.guard';
+import { doNothing } from 'src/utils/functions/general';
+import { JwtAuthGuard } from 'src/modules/global/authentication/guards/jwt-auth.guard';
+import { LocalAuthGuard } from 'src/modules/global/authentication/guards/local-auth.guard';
 import { RefreshJwtAuthGuard } from './guards/refresh-auth.guard';
 import { LoginResponseDto } from './dto/login.dto';
-import { ValidateRequest } from '@/utils/zod/decorators';
+import { ValidateRequest } from 'src/utils/zod/decorators';
 import { LoginDto, loginSchema, LoginSchemaData } from './schemas/login';
 import { RefreshTokenDto } from './schemas/refresh';
-import { BadRequestError } from '@/common/applicationError';
-import { CustomRequest } from '@/@types/services/types';
+import { BadRequestError } from 'src/common/applicationError';
+import { CustomRequest } from 'src/@types/services/types';
 
 @ApiTags('Autenticação')
 @Controller('api/auth')
@@ -29,7 +29,7 @@ export class AuthenticationController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   @ValidateRequest(loginSchema)
-  @ApiOperation({ summary: 'Autenticar usuário' })
+  @ApiOperation({ summary: 'Autenticar usuário', operationId: 'login' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Usuário autenticado com sucesso',
@@ -46,7 +46,7 @@ export class AuthenticationController {
 
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Deslogar usuário' })
+  @ApiOperation({ summary: 'Deslogar usuário', operationId: 'logout' })
   @Post('logout')
   async logout(@Request() req: CustomRequest) {
     if (!req.user) {
@@ -59,7 +59,10 @@ export class AuthenticationController {
     return this.authenticationService.logout(req.user.id);
   }
 
-  @ApiOperation({ summary: 'Renovar o token de acesso' })
+  @ApiOperation({
+    summary: 'Renovar o token de acesso',
+    operationId: 'refreshToken',
+  })
   @UseGuards(RefreshJwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiBody({

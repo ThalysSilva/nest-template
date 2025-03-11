@@ -1,92 +1,50 @@
-🚀 NestJS Template
+## EmprestÁi
 
-Este é um template base para projetos utilizando NestJS, um framework progressivo para Node.js focado em escalabilidade e modularidade.
+Criação de um projeto para exemplificar minhas habilidades com nestJs em um case financeiro.
+Link para acessar a aplicação frontend já em produção e utilizando o backend: https://emprest-ai-frontend.vercel.app
+Link do backend em produção: https://emprest-ai-backend.vercel.app
 
-📌 Pré-requisitos
+### Tecnologias utilizadas:
+- NestJs
+- Zod
+- Prisma
+- Jest
+- Clean architeture
 
-Certifique-se de ter instalado em sua máquina:
+ #### Identificadores
+Existem 4 tipos de identificadores:
 
-Node.js (versão recomendada: 18+)
+- Pessoa Física;
+- Pessoa Jurídica;
+- Estudante Universitário;
+- Aposentado;
 
-Yarn ou npm
+Cada um dos identificadores tem uma logica para a sua definição:
 
-Banco de dados (PostgreSQL, MySQL, MongoDB, etc., conforme a configuração desejada)
+- Pessoa física: deve ser um cpf válido, logo deve ter 11 dígitos;
+- Pessoa jurídica: deve ser um cnpj válido, logo precisa ter 14 dígitos;
+- Estudante: 1. O candidato deve validar que o número do identificador possui
+  exatamente 8 caracteres 2. A soma do primeiro e último dígito deve ser igual a 9
+- Aposentado: 1. O candidato deve validar que o número do identificador possui
+  exatamente 10 caracteres 2. O último dígito não pode estar presente nos outros 9 dígitos.
 
-🔧 Instalação
+#### Valor das parcelas
+Cada Tipo de identificador terá acesso a diferentes faixas em relação a solicitação de parcelas. Segue a relação abaixo:
 
-Clone este repositório e instale as dependências:
+Pessoa Física:
+- Valor mínimo mensal das parcelas: R$ 300,00
+- Valor máximo de todo o empréstimo: R$ 10.000,00
 
-# Clonar o repositório
-git clone https://github.com/seu-usuario/nest-template.git
-cd nest-template
+  Pessoa Jurídica:
+- Valor mínimo mensal das parcelas: R$ 1000,00
+- Valor máximo de todo o empréstimo: R$ 100.000,00
 
-# Instalar dependências
-yarn install # ou npm install
+  Estudante Universitário:
+- Valor mínimo mensal das parcelas: R$ 100,00
+- Valor máximo de todo o empréstimo: R$ 10.000,00
 
-⚙️ Configuração
+  Aposentado:
+- Valor mínimo mensal das parcelas: R$ 400,00
+- Valor máximo de todo o empréstimo: R$ 25.000,00
 
-Copie o arquivo .env.example para .env.development e configure as variáveis de ambiente conforme necessário:
-
-cp .env.example .env.development
-
-Edite o arquivo .env para definir as configurações do banco de dados e outras variáveis necessárias.
-
-▶️ Executando a Aplicação
-
-Para rodar o projeto em ambiente de desenvolvimento:
-
-yarn prisma:migrate:dev
-
-yarn prisma:generate:dev
-
-yarn start:dev # ou npm run start:dev
-
-Para rodar em produção:
-
-yarn build && yarn start:prod # ou npm run build && npm run start:prod
-
-🏗 Estrutura do Projeto
-
-├── src
-│   ├── modules          # Módulos da aplicação
-│   │   ├── auth         # Autenticação e autorização
-│   │   ├── users        # Usuários
-│   │   ├── ...          # Outros módulos
-│   ├── common           # Código reutilizável (interceptors, filtros, pipes)
-│   ├── config           # Configurações do projeto
-│   ├── main.ts          # Arquivo principal
-│   ├── app.module.ts    # Módulo raiz
-├── .env.example         # Exemplo de variáveis de ambiente
-├── package.json         # Dependências do projeto
-├── tsconfig.json        # Configuração do TypeScript
-
-🛠️ Comandos Úteis
-
-Rodar Testes
-
-yarn test # ou npm run test
-
-Rodar ESLint e Prettier
-
-yarn lint # ou npm run lint
-
-Gerar Build
-
-yarn build # ou npm run build
-
-📌 Tecnologias Utilizadas
-
-NestJS
-
-TypeScript
-
-Prisma (ou outro ORM)
-
-JWT para autenticação
-
-Docker (opcional)
-
-📜 Licença
-
-Este projeto está licenciado sob a MIT License.
-
+Link para acessar a aplicação já em produção: https://emprest-ai-frontend.vercel.app

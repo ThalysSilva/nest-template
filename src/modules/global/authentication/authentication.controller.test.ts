@@ -3,12 +3,12 @@ import { AuthenticationController } from './authentication.controller';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthenticationService } from './authentication.service';
 import { mock } from 'jest-mock-extended';
-import { CustomRequest } from '@/@types/services/types';
+import { CustomRequest } from 'src/@types/services/types';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from '@/repository/userRepository';
+import { UserRepository } from 'src/repositories/userRepository';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import refreshJwtConfig from './config/refresh-jwt.config';
-import { User } from '@/@entities/user';
+import { User } from 'src/@entities/user';
 
 const jwtServiceMock = mock<JwtService>();
 const userRepositoryMock = mock<UserRepository>();

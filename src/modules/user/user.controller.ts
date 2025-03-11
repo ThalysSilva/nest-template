@@ -1,12 +1,12 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from '@/@entities/user';
+import { User } from 'src/@entities/user';
 import {
   CreateUserDto,
   createUserSchema,
   CreateUserSchemaData,
 } from './schemas/createUser';
-import { ValidateRequest } from '@/utils/zod/decorators';
+import { ValidateRequest } from 'src/utils/zod/decorators';
 import { ApiResponse, ApiBody, ApiTags, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('Usuários')
@@ -16,7 +16,7 @@ export class UserController {
 
   @Post()
   @ValidateRequest(createUserSchema)
-  @ApiOperation({ summary: 'Criar usuário' })
+  @ApiOperation({ summary: 'Criar usuário', operationId: 'createUser' })
   @ApiBody({
     description: 'Dados para criação do usuário',
     type: CreateUserDto,

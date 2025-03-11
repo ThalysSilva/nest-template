@@ -1,28 +1,27 @@
 {
   "name": "nest-template",
-  "version": "0.0.8",
+  "version": "0.0.2",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "echo 'Iniciando build...' && npx prisma generate && nest build",
+    "build-vercel": "echo 'Rodando o comando build-vercel' && yarn build",
+    "postinstall": "echo 'Rodando o comando postinstall' && prisma generate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "prisma:migrate:dev": "dotenv -e .env.development -- cross-var npx prisma migrate dev --schema %PRISMA_SCHEMA%",
-    "prisma:generate:dev": "dotenv -e .env.development -- cross-var npx prisma generate --schema %PRISMA_SCHEMA%",
-    "prisma:studio:dev": "dotenv -e .env.development -- cross-var npx prisma studio --schema %PRISMA_SCHEMA%",
-    "build:dev": "dotenv -e .env.development -- pnpm run prisma:build:development && nest build",
-    "build:homolog": "dotenv -e .env.staging -- pnpm run prisma:build:homolog && nest build",
-    "build:production": "dotenv -e .env.production -- pnpm run prisma:build:prod && nest build",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:migrate:deploy": "npx prisma migrate deploy",
+    "prisma:generate": "npx prisma generate",
+    "prisma:db-pull": "npx prisma db pull",
+    "prisma:studio": "dotenv -e .env.development -- npx prisma studio",
     "start": "nest start",
-    "start:local": "dotenv -e .env.local -- nest start",
-    "start:dev": "dotenv -e .env.development -- nest start --watch",
-    "start:homolog": "dotenv -e .env.staging -- node dist/main",
+    "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:production": "dotenv -e .env.production -- node dist/main",
+    "start:prod": "node dist/src/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
@@ -59,6 +58,7 @@
     "prisma": "^6.3.1",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+    "tsconfig-paths": "^4.2.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -91,7 +91,9 @@
     "ts-jest": "^29.2.5",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.3"
+  },
+  "prisma": {
+    "schema": "src/modules/global/db/prisma/schema.prisma"
   }
 }
