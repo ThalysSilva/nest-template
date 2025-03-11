@@ -86,7 +86,7 @@ services:
     networks:
       - nest-template-network
   evolution-api-template:
-    container_name: evolution_api-template
+    container_name: evolution-api-template
     image: atendai/evolution-api:v2.1.1
     restart: always
     ports:
